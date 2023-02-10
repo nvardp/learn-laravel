@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V15</title>
+	<title>@yield('title')</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="../images/icons/favicon.ico"/>
@@ -22,7 +22,12 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-
+                <div class="login100-form-title" style="background-image: url(../resources/images/bg-01.jpg);">
+                    <span class="login100-form-title-1">
+                        @yield('title')
+                    </span>
+                </div>
+                
                 @yield('content')
 				
 			</div>

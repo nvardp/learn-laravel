@@ -1,14 +1,12 @@
 @extends('layouts.auth-master')
 
+@section('title')
+Login
+@endsection
+
 @section('content')
-<div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
-            <div class="login100-form-title" style="background-image: url(../resources/images/bg-01.jpg);">
-                <span class="login100-form-title-1">
-                    Log in
-                </span>
-            </div>
+
+            
             <form class="login100-form validate-form" method="post" action="{{ route('login.perform') }}">
                 @csrf
         
@@ -39,7 +37,5 @@
                     <button class="login100-form-btn" type="submit"> Login </button>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
+      
 @endsection
