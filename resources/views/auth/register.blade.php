@@ -60,7 +60,8 @@ Register
                 <span class="text-danger text-left">{{ $errors->first('password_confirmation') }}</span>
             @endif
         </div>
-
+        {!! NoCaptcha::renderJs() !!}
+        {!! NoCaptcha::display() !!}
 
         <div class="container-login100-form-btn">
             <button class="login100-form-btn" type="submit"> Register </button>

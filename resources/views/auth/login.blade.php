@@ -33,6 +33,9 @@ Login
                     @endif
                 </div>
 
+                {!! NoCaptcha::renderJs() !!}
+                {!! NoCaptcha::display() !!}
+
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn" type="submit"> Login </button>
                 </div>

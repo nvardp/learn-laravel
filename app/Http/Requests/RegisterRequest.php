@@ -28,7 +28,8 @@ class RegisterRequest extends FormRequest
             'email' => 'required|email:rfc,dns|unique:users,email',
             'username' => 'required|unique:users,username',
             'password' => ['required', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
-            'password_confirmation' => 'required|same:password'
+            'password_confirmation' => 'required|same:password',
+            'g-recaptcha-response' => 'required|captcha',
         ];
     }
 }
