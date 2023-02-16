@@ -6,7 +6,7 @@
             <div class="pull-left">
                 <h2>Laravel CRUD Example</h2>
             </div>
-            <div class="pull-right">
+            <div class="pull-right mb-4">
                 <a class="btn btn-success" href="{{ route('products.create') }}"> Create New Product</a>
             </div>
         </div>

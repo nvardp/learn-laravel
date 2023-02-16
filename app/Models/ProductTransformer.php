@@ -1,7 +1,7 @@
 
 <?php
 
-class UserTransformer extends TransformerAbstract
+class ProductTransformer extends TransformerAbstract
 {
     public function transform(Product $product)
     {

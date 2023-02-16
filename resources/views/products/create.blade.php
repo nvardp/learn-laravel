@@ -1,5 +1,6 @@
 @extends('products.layout')
 
+
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
@@ -23,9 +24,9 @@
     </div>
 @endif
 
-<form action="{{ route('products.store') }}" method="POST">
+<form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
     {{-- token validation --}}
-    @csrf 
+    @csrf
 
      <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -40,6 +41,12 @@
                 <textarea class="form-control" style="height:150px" name="description" placeholder="Description"></textarea>
             </div>
         </div>
+         <div class="col-xs-12 col-sm-12 col-md-12">
+             <div class="form-group">
+                 <strong>Image:</strong>
+                 <input type="file" name="fileToUpload[]" id="fileToUpload"  class="fileToUpload "  accept="image/*" />
+             </div>
+         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Submit</button>
         </div>

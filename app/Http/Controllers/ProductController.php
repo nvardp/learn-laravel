@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
@@ -39,8 +42,22 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        Product::create($request->all());
+        $product = Product::create([   'name' => $request->get('name'),
+                            'description' => $request->get('description'),
+                            'created_by' => auth()->user()->id ]);
 
+        $productId = $product->id;
+        if ($request->hasFile('fileToUpload')) {
+            $images = $request->file('fileToUpload');
+            foreach ($images as $image)
+            {
+                $fileName = pathinfo($image->getClientOriginalName())['filename'] . '_' . time() . '.' . $image->getClientOriginalExtension();
+                Storage::disk('local')->put('/images/products' . '/' . $fileName, base64_decode($image), 'public');
+            }
+        }
+        ProductImage::create([  'path' => "products/" . $fileName,
+                                'product_id' => $productId,
+                                'name' => $image->getClientOriginalName() ]);
         return redirect()->route('products.index')
                         ->with('success','Product created successfully.');
 
