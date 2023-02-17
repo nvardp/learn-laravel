@@ -2,6 +2,14 @@
 
 @section('content')
     <div class="row">
+        @foreach ($product->getImages() as $image)
+        <div class="col-4 pl-2 pb-2">
+            <img class="contain" height="400px" width="100%" src="../images/{{ $image }}" alt="img" />
+        </div>
+        @endforeach
+
+    </div>
+    <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h2> Show Product</h2>
@@ -26,5 +34,5 @@
             </div>
         </div>
     </div>
-    
+
 @endsection

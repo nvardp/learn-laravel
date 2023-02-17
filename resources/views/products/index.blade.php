@@ -18,32 +18,31 @@
         </div>
     @endif
 
-    <table class="table table-bordered">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Details</th>
-            <th width="280px">Action</th>
-        </tr>
-        @foreach ($products as $product)
-        <tr>
-            <td>{{ $product->id }}</td>
-            <td>{{ $product->name }}</td>
-            <td>{{ $product->description }}</td>
-            <td>
-                <form action="{{ route('products.destroy',$product->id) }}" method="POST">
-                    <a class="btn btn-info" href="{{ route('products.show',$product->id) }}">Show</a>
-                    <a class="btn btn-primary" href="{{ route('products.edit',$product->id) }}">Edit</a>
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
+    <div class="row">
 
-    </table>
+        @foreach ($products as $product)
+            <div class="col-md-4">
+                <div class="card mb-2 mt-2" style="width: 21rem;">
+                    <img height="250px" class="card-img-top" src="{{  "images" . DIRECTORY_SEPARATOR . $product->getCoverImg() }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"> {{ $product->name }} </h5>
+                        <p class="card-text"> {{ $product->description }} </p>
+                        <form action="{{ route('products.destroy',$product->id) }}" method="POST">
+                            <a class="btn btn-info" href="{{ route('products.show',$product->id) }}">Show</a>
+                            <a class="btn btn-primary" href="{{ route('products.edit',$product->id) }}">Edit</a>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+
     {{ $products->links() }}
+
 
 
 @endsection

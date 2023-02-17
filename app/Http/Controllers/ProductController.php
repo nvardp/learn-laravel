@@ -18,7 +18,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(5);
+        $products = Product::where('created_by', auth()->user()->id)->paginate(6);
+        for ($i =0; $i< count($products); ++$i)
+        {
+            $images = (Product::find($products[$i]->id)->productImages)->first();
+            if($images)
+                $products[$i]->setCoverImg( $images->path );
+        }
 
         return view('products.index',compact('products'))
             ->with(request()->input('page'));
@@ -52,12 +58,13 @@ class ProductController extends Controller
             foreach ($images as $image)
             {
                 $fileName = pathinfo($image->getClientOriginalName())['filename'] . '_' . time() . '.' . $image->getClientOriginalExtension();
-                Storage::disk('local')->put('/images/products' . '/' . $fileName, base64_decode($image), 'public');
+                Storage::disk('local')->put('/images/products' . '/' . $fileName,  file_get_contents($image -> getRealPath()) );
+
+                ProductImage::create([  'path' => "products/" . $fileName,
+                                        'product_id' => $productId,
+                                        'name' => $image->getClientOriginalName() ]);
             }
         }
-        ProductImage::create([  'path' => "products/" . $fileName,
-                                'product_id' => $productId,
-                                'name' => $image->getClientOriginalName() ]);
         return redirect()->route('products.index')
                         ->with('success','Product created successfully.');
 
@@ -71,6 +78,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        $images = (Product::find($product->id)->productImages);
+        foreach($images as $image)
+            $product->setImages( $image->path );
+
         return view('products.show', compact('product'));
 
     }

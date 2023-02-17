@@ -44,7 +44,7 @@
          <div class="col-xs-12 col-sm-12 col-md-12">
              <div class="form-group">
                  <strong>Image:</strong>
-                 <input type="file" name="fileToUpload[]" id="fileToUpload"  class="fileToUpload "  accept="image/*" />
+                 <input type="file" name="fileToUpload[]" id="fileToUpload"  class="fileToUpload "  accept="image/*" multiple />
              </div>
          </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
