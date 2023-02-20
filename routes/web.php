@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\http\Controllers\ProductController;
+use App\http\Controllers\ProductImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ Route::get('/', function () {
 });
 
 Route::resource('products', ProductController::class)->middleware(['auth']);;
+Route::post('products_img/{productImage}', ProductImageController::class .'@destroy')->name('productimage.destroy');
 
 Route::group(['namespace' => 'App\Http\Controllers'], function()
 {

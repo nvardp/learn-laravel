@@ -5,8 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
+//use App\Models\ProductTransformer;
+use App\Http\Resources\ProductResource;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
+
 
 
 class ProductController extends Controller
@@ -78,12 +83,19 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $images = (Product::find($product->id)->productImages);
-        foreach($images as $image)
-            $product->setImages( $image->path );
+        $response = Gate::inspect('view', $product);
+        if ($response->allowed())
+        {
+            $images = (Product::find($product->id)->productImages);
+            foreach($images as $image)
+                $product->setImages( $image->path );
 
-        return view('products.show', compact('product'));
-
+            return view('products.show', compact('product'));
+        }
+        else
+        {
+            return redirect()->route('products.index')->with('danger', $response->message());;
+        }
     }
 
     /**
@@ -94,8 +106,18 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        $response = Gate::inspect('update', $product);
+        if ($response->allowed())
+        {
+            $full_product = new ProductResource($product);
+            $full_product = $full_product-> toArray($product);
 
+            return view('products.edit', compact('full_product', ));
+        }
+        else
+        {
+            return redirect()->route('products.index')->with('danger', $response->message());;
+        }
     }
 
     /**
@@ -105,18 +127,35 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-               //validate input // input name
-               $request->validate([
-                'name' => 'required',
-                'description' => 'required',
-            ]);
+        $response = Gate::inspect('update', $product);
+        if ($response->allowed())
+        {
+            $product->update([   'name' => $request->get('name'),
+                                'description' => $request->get('description')
+                            ]);
+            $productId = $product->id;
+            if ($request->hasFile('fileToUpload')) {
+                $images = $request->file('fileToUpload');
+                foreach ($images as $image)
+                {
+                    $fileName = pathinfo($image->getClientOriginalName())['filename'] . '_' . time() . '.' . $image->getClientOriginalExtension();
+                    Storage::disk('local')->put('/images/products' . '/' . $fileName,  file_get_contents($image -> getRealPath()) );
 
-            $product->update($request->all());
+                    ProductImage::create([  'path' => "products/" . $fileName,
+                        'product_id' => $productId,
+                        'name' => $image->getClientOriginalName() ]);
+                }
+            }
 
             return redirect()->route('products.index')
-                            ->with('success','Product updated successfully.');
+                ->with('success', 'Product updated successfully.');
+        }
+        else
+        {
+            return redirect()->route('products.index')->with('danger', $response->message());;
+        }
     }
 
     /**
