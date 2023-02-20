@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer("product_id");
             $table->string("name");
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
