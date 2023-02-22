@@ -1,0 +1,23 @@
+
+<?php
+
+use App\Models\@name;
+use League\Fractal\TransformerAbstract;
+
+
+class @nameTransformer extends TransformerAbstract
+{
+    public function transform(@name @varName)
+    {
+        return [
+           // 'id'            => (int) $product->id,
+           // 'name'          => (string) $product->name,
+        ];
+    }
+}
+
+
+// use
+
+// @varName = @name::find(1);
+// return (new @nameTransformer)->transform(@varName);

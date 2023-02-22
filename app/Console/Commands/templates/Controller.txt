@@ -1,0 +1,119 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\@nameRequest;
+use App\Models\@name;
+use App\Models\@nameTransformer;
+use App\Http\Resources\@nameResource;
+
+class @nameController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+
+        //return view('.index',compact(''))
+           // ->with(request()->input('page'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+       // return view('.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(@nameRequest $request)
+    {
+       // return redirect()->route('.index')
+                  //      ->with('success','... created successfully.');
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\@name  @varName
+     * @return \Illuminate\Http\Response
+     */
+    public function show(@name @varName)
+    {
+        $response = Gate::inspect('view', @varName);
+        if ($response->allowed())
+        {
+           // return view('.show', compact(''));
+        }
+        else
+        {
+           //return redirect()->route('.index')->with('danger', $response->message());
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\@name  @varName
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(@name @varName)
+    {
+        $response = Gate::inspect('update', @varName);
+        if ($response->allowed())
+        {
+            // return view('.edit', compact('', ));
+        }
+        else
+        {
+           // return redirect()->route('.index')->with('danger', $response->message());;
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\@name  @varName
+     * @return \Illuminate\Http\Response
+     */
+    public function update(@nameRequest $request, @name @varName)
+    {
+        $response = Gate::inspect('update', @varName);
+        if ($response->allowed())
+        {
+            return redirect()->route('.index')
+                ->with('success', '... updated successfully.');
+        }
+        else
+        {
+            return redirect()->route('.index')->with('danger', $response->message());;
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\@name  @varName
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(@name @varName)
+    {
+        @varName->delete();
+
+       // return redirect()->route('.index')
+           //             ->with('success','... deleted successfully');
+    }
+}
