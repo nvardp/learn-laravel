@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\http\Controllers\ProductController;
 use App\http\Controllers\ProductImageController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('products', ProductController::class)->middleware(['auth']);;
+Route::resource('products', ProductController::class)->middleware(['auth']);
+Route::resource('users', UserController::class)->middleware(['auth']);
+Route::resource('roles', RoleController::class)->middleware(['auth']);
 Route::post('products_img/{productImage}', ProductImageController::class .'@destroy')->name('productimage.destroy');
 
 Route::group(['namespace' => 'App\Http\Controllers'], function()

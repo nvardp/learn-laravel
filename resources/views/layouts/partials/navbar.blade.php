@@ -7,10 +7,15 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="{{ route('home.index') }}" class="nav-link px-2 text-secondary">Home</a></li>
+            @can('product-list')
           <li><a href="{{ route('products.index') }}" class="nav-link px-2 text-white">Products</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+            @endcan
+
+          <li><a href="{{ route('users.index') }}" class="nav-link px-2 text-white">Users</a></li>
+            @can('role-list')
+          <li><a href="{{ route('users.index') }}" class="nav-link px-2 text-white">Roles</a></li>
+            @endcan
+{{--          <li><a href="#" class="nav-link px-2 text-white">About</a></li>--}}
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -19,7 +24,7 @@
 
         @auth
           {{auth()->user()->name}}
-          <div class="text-end">
+          <div class="ml-2 text-end">
             <a href="{{ route('logout.perform') }}" class="btn btn-outline-light me-2">Logout</a>
           </div>
         @endauth
