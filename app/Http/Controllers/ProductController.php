@@ -31,17 +31,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $email_data = array(
-            'name' =>"banana",
-            'email' => "nvardp21@gmail.com",
-        );
-
-        Mail::send('mails.welcome', $email_data, function ($message) use ($email_data) {
-            $message->to($email_data['email'])
-                ->subject('Welcome to MyNotePaper')
-                ->from('info@mynotepaper.com', 'MyNotePaper');
-        });
-
         $products = Product::where('created_by', auth()->user()->id)->paginate(6);
         for ($i =0; $i< count($products); ++$i)
         {

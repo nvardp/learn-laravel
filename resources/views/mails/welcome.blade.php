@@ -1,4 +1,5 @@
-Hello {{ $name }},<br><br>
+{{--Hello {{ $name }},<br><br>--}}
+hello dear,
 
 Welcome to MyNotePaper.<br><br>
 

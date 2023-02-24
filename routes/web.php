@@ -21,6 +21,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('email-test', function(){
+    $email_data = array(
+        'name' =>"banana...",
+        'email' => "nvardp21@gmail.com",
+    );
+
+    dispatch(new App\Jobs\SendEmailJob($email_data));
+    dd('done');
+});
+
+
+
 Route::resource('products', ProductController::class)->middleware(['auth']);
 Route::resource('users', UserController::class)->middleware(['auth']);
 Route::resource('roles', RoleController::class)->middleware(['auth']);
